@@ -1,10 +1,23 @@
 {
-    "name": "bakkerij/notifier",
+    "name": "jeffersonsimaogoncalves/cakephp-notifier",
     "description": "Notifier plugin for CakePHP",
     "type": "cakephp-plugin",
+    "authors": [
+        {
+            "name": "Bakkerij",
+            "homepage": "https://github.com/bakkerij",
+            "role": "Author"
+        },
+        {
+            "name": "Jefferson Simão Gonçalves",
+            "homepage": "https://github.com/jeffersonsimaogoncalves"
+        }
+    ],
     "require": {
-        "php": ">=5.4.16",
-        "cakephp/cakephp": "3.5.*"
+        "php": ">=7.0",
+        "ext-json": "@stable",
+        "cakephp/cakephp": "^3.6",
+        "cakephp/migrations": "^2.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
@@ -12,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bakkerij\\Notifier\\": "src"
+            "JeffersonSimaoGoncalves\\Notifier\\": "src"
         }
     },
     "autoload-dev": {

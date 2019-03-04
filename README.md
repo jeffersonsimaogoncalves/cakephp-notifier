@@ -1,10 +1,5 @@
 # Notifier plugin for CakePHP
 
-[![Travis](https://img.shields.io/travis/bakkerij/notifier.svg?style=flat-square)](https://travis-ci.org/bakkerij/notifier) 
-[![Packagist](https://img.shields.io/packagist/dt/cakemanager/cakephp-notifier.svg?style=flat-square)](https://packagist.org/packages/bakkerij/notifier)
-[![Packagist](https://img.shields.io/packagist/v/bakkerij/notifier.svg?style=flat-square)](https://packagist.org/packages/bakkerij/notifier)
-[![Gitter](https://img.shields.io/gitter/room/bakkerij/notifier.js.svg?style=flat-square)](https://gitter.im/bakkerij/notifier)
-
 This plugin allows you to integrate a simple notification system into your application. 
 
 ## Installation
@@ -14,19 +9,19 @@ You can install this plugin into your CakePHP application using [composer](http:
 The recommended way to install this plugin as composer package is:
 
 ```
-    composer require bakkerij/notifier
+    composer require jeffersonsimaogoncalves/cakephp-notifier
 ```
 
 Now load the plugin via the following command:
 
 ```
-    bin/cake plugin load -b Bakkerij/Notifier
+    bin/cake plugin load -b JeffersonSimaoGoncalves/Notifier
 ```
 
 After loading the plugin you need to migrate the tables for the plugin using:
 
 ```
-    bin/cake migrations migrate -p Bakkerij/Notifier
+    bin/cake migrations migrate -p JeffersonSimaoGoncalves/Notifier
 ```
 
 ## Sending notifications
@@ -51,7 +46,7 @@ Now we will be able to send a new notification using our `newBlog` template.
 
 ```php
     $notificationManager->notify([
-        'users' => [1, 2],
+        'users' => ['7be18ce3-94e6-476a-870d-a0108d1697b7', 'c72da51b-16c8-4741-8646-2e45721b3277'],
         'recipientLists' => ['administrators'],
         'template' => 'newBlog',
         'vars' => [
@@ -65,8 +60,8 @@ Now we will be able to send a new notification using our `newBlog` template.
 
 With the `notify` method we sent a new notification. A list of all attributes:
 
-- `users` - This is an integer or array filled with id's of users to notify. So, when you want to notify user 261 and
-373, add `[261, 373]`.
+- `users` - This is an integer or array filled with id's of users to notify. So, when you want to notify user c72da51b-16c8-4741-8646-2e45721b3277 and
+7be18ce3-94e6-476a-870d-a0108d1697b7, add `[c72da51b-16c8-4741-8646-2e45721b3277, 7be18ce3-94e6-476a-870d-a0108d1697b7]`.
 - `recipientLists` - This is a string or array with lists of recipients. Further on you can find more about
 RecipientLists.
 - `template` - The template you added, for example `newBlog`.
@@ -79,7 +74,7 @@ To send notifications to large groups you are able to use RecipientLists.
 You can register them with:
 
 ```php
-    $notificationManager->addRecipientList('administrators', [1,2,3,4]);
+    $notificationManager->addRecipientList('administrators', ['7be18ce3-94e6-476a-870d-a0108d1697b7', 'c72da51b-16c8-4741-8646-2e45721b3277','7be18ce3-94e6-476a-870d-a0108d1697b4', 'c72da51b-16c8-4741-8646-2e45721b3272']);
 ```
     
 Now we have created a list of recipients called `administrators`.
@@ -92,7 +87,7 @@ This can be used later on when we send a new notification:
     ]);
 ```
 
-Now, the users 1, 2, 3 and 4 will receive a notification.
+Now, the users 7be18ce3-94e6-476a-870d-a0108d1697b7, c72da51b-16c8-4741-8646-2e45721b3277, 7be18ce3-94e6-476a-870d-a0108d1697b4 and c72da51b-16c8-4741-8646-2e45721b3272 will receive a notification.
 
 ## Retrieving notifications
 
@@ -104,14 +99,14 @@ You can easily retrieve notifications via the `getNotifications` method. Some ex
     // getting a list of all notifications of the current logged in user
     $this->Notifier->getNotifications();
 
-    // getting a list of all notifications of the user with id 2
-    $this->Notifier->getNotifications(2);
+    // getting a list of all notifications of the user with id c72da51b-16c8-4741-8646-2e45721b3272
+    $this->Notifier->getNotifications('c72da51b-16c8-4741-8646-2e45721b3272');
     
     // getting a list of all unread notifications
-    $this->Notifier->allNotificationList(2, true);
+    $this->Notifier->allNotificationList('c72da51b-16c8-4741-8646-2e45721b3272', true);
 
     // getting a list of all read notifications
-    $this->Notifier->allNotificationList(2, false);
+    $this->Notifier->allNotificationList('c72da51b-16c8-4741-8646-2e45721b3272', false);
 ```
 
 #### Counts
@@ -122,14 +117,14 @@ Getting counts of read/unread notifications can be done via the `countNotificati
     // getting a number of all notifications of the current logged in user
     $this->Notifier->countNotifications();
 
-    // getting a number of all notifications of the user with id 2
-    $this->Notifier->countNotifications(2);
+    // getting a number of all notifications of the user with id c72da51b-16c8-4741-8646-2e45721b3272
+    $this->Notifier->countNotifications('c72da51b-16c8-4741-8646-2e45721b3272');
     
     // getting a number of all unread notifications
-    $this->Notifier->countNotificationList(2, true);
+    $this->Notifier->countNotificationList('c72da51b-16c8-4741-8646-2e45721b3272', true);
 
     // getting a number of all read notifications
-    $this->Notifier->countNotificationList(2, false);
+    $this->Notifier->countNotificationList('c72da51b-16c8-4741-8646-2e45721b3272', false);
 ```
 
 #### Mark as read
@@ -138,10 +133,10 @@ To mark notifications as read, you can use the `markAsRead` method. Some example
 
 ```php
     // mark a single notification as read
-    $this->Notifier->markAsRead(500;
+    $this->Notifier->markAsRead(500);
 
     // mark all notifications of the given user as read
-    $this->Notifier->markAsRead(null, 2);
+    $this->Notifier->markAsRead(null, 'c72da51b-16c8-4741-8646-2e45721b3272');
 ```
 
 #### Notification Entity
@@ -178,7 +173,7 @@ The `NotificationManager` is the Manager of the plugin. You can get an instance 
     NotificationManager::instance();
 ```
 
-The `NotificationManager` has the following namespace: `Bakkerij\Notifier\Utility\NotificationManager`.
+The `NotificationManager` has the following namespace: `JeffersonSimaoGoncalves\Notifier\Utility\NotificationManager`.
 
 The manager has the following methods available:
 
@@ -190,13 +185,13 @@ The manager has the following methods available:
 
 ## Notifier Component
 
-The `Bakkerij/Notifier.Notifier` component can be used in Controllers:
+The `JeffersonSimaoGoncalves/Notifier.Notifier` component can be used in Controllers:
 
 ```php
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('Bakkerij/Notifier.Notifier');
+        $this->loadComponent('JeffersonSimaoGoncalves/Notifier.Notifier');
     }
 ```
 
@@ -209,6 +204,8 @@ The component has the following methods available:
 
 ## Keep in touch
 
-If you need some help or got ideas for this plugin, feel free to chat at [Gitter](https://gitter.im/bakkerij/notifier).
-
 Pull Requests are always more than welcome!
+
+## Credits
+
+This work is based on the [code by Bakkerij](https://github.com/bakkerij/notifier).

@@ -12,6 +12,7 @@
  * @since         1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 use Phinx\Migration\AbstractMigration;
 
 class NotifierInitial extends AbstractMigration
@@ -38,23 +39,22 @@ class NotifierInitial extends AbstractMigration
         $table
             ->addColumn('template', 'string', [
                 'default' => null,
-                'limit' => 150,
-                'null' => true,
+                'limit'   => 150,
+                'null'    => true,
             ])
             ->addColumn('vars', 'text', [
                 'default' => null,
-                'limit' => null,
-                'null' => true,
+                'limit'   => null,
+                'null'    => true,
             ])
-            ->addColumn('user_id', 'integer', [
-                'default' => 0,
-                'limit' => 11,
-                'null' => true,
+            ->addColumn('user_id', 'uuid', [
+                'default' => null,
+                'null'    => false,
             ])
             ->addColumn('state', 'integer', [
                 'default' => 1,
-                'limit' => 11,
-                'null' => true,
+                'limit'   => 11,
+                'null'    => true,
             ])
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')

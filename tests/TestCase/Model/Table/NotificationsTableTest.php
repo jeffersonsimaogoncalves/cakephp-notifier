@@ -12,9 +12,9 @@
  * @since         1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Bakkerij\Notifier\Test\TestCase\Model\Table;
+namespace JeffersonSimaoGoncalves\Notifier\Test\TestCase\Model\Table;
 
-use Bakkerij\Notifier\Utility\NotificationManager;
+use JeffersonSimaoGoncalves\Notifier\Utility\NotificationManager;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,15 +23,15 @@ use Cake\TestSuite\TestCase;
  */
 class NotificationsTableTest extends TestCase
 {
-    
+
     public $fixtures = [
-        'plugin.bakkerij\Notifier.notifications',
+        'plugin.JeffersonSimaoGoncalves\Notifier.notifications',
     ];
 
     public function setUp()
     {
         parent::setUp();
-        $this->Notifications = TableRegistry::get('Bakkerij/Notifier.Notifications');
+        $this->Notifications = TableRegistry::get('JeffersonSimaoGoncalves/Notifier.Notifications');
     }
 
     public function tearDown()

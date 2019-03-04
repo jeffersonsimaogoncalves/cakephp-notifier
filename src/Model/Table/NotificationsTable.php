@@ -12,11 +12,10 @@
  * @since         1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Bakkerij\Notifier\Model\Table;
 
-use Cake\ORM\RulesChecker;
+namespace JeffersonSimaoGoncalves\Notifier\Model\Table;
+
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -27,6 +26,7 @@ class NotificationsTable extends Table
 
     /**.
      * Configurations
+     *
      * @var array
      */
     public $config = [];
@@ -35,13 +35,14 @@ class NotificationsTable extends Table
      * Initialize method
      *
      * @param array $config The configuration for the Table.
+     *
      * @return void
      */
     public function initialize(array $config)
     {
-        $this->table('notifications');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('notifications');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
     }
 
@@ -49,6 +50,7 @@ class NotificationsTable extends Table
      * Default validation rules.
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
+     *
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator)

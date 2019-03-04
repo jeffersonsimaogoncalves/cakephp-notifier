@@ -12,10 +12,10 @@
  * @since         1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Bakkerij\Notifier\Test\TestCase\Controller\Component;
+namespace JeffersonSimaoGoncalves\Notifier\Test\TestCase\Controller\Component;
 
-use Bakkerij\Notifier\Controller\Component\NotifierComponent;
-use Bakkerij\Notifier\Utility\NotificationManager;
+use JeffersonSimaoGoncalves\Notifier\Controller\Component\NotifierComponent;
+use JeffersonSimaoGoncalves\Notifier\Utility\NotificationManager;
 use Cake\Controller\ComponentRegistry;
 use Cake\Network\Request;
 use Cake\Network\Response;
@@ -29,7 +29,7 @@ class NotifierComponentTest extends TestCase
 {
 
     public $fixtures = [
-        'plugin.bakkerij\Notifier.notifications'
+        'plugin.JeffersonSimaoGoncalves\Notifier.notifications'
     ];
 
     public function setUp()
@@ -37,7 +37,7 @@ class NotifierComponentTest extends TestCase
         parent::setUp();
 
         $this->Manager = NotificationManager::instance();
-        $this->Model = TableRegistry::get('Bakkerij/Notifier.Notifications');
+        $this->Model = TableRegistry::get('JeffersonSimaoGoncalves/Notifier.Notifications');
 
         // Setup our component and fake the controller
         $request = new Request();

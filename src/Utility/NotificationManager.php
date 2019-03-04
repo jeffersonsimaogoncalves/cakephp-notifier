@@ -12,7 +12,7 @@
  * @since         1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Bakkerij\Notifier\Utility;
+namespace JeffersonSimaoGoncalves\Notifier\Utility;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -75,7 +75,7 @@ class NotificationManager
      */
     public function notify($data)
     {
-        $model = TableRegistry::get('Bakkerij/Notifier.Notifications');
+        $model = TableRegistry::get('JeffersonSimaoGoncalves/Notifier.Notifications');
 
         $_data = [
             'users' => [],
