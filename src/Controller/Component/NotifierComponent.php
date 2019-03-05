@@ -12,12 +12,12 @@
  * @since         1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace JeffersonSimaoGoncalves\Notifier\Controller\Component;
 
-use JeffersonSimaoGoncalves\Notifier\Utility\NotificationManager;
 use Cake\Controller\Component;
-use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use JeffersonSimaoGoncalves\Notifier\Utility\NotificationManager;
 
 /**
  * Notifier component
@@ -30,7 +30,7 @@ class NotifierComponent extends Component
      * @var array
      */
     protected $_defaultConfig = [
-        'UsersModel' => 'Users'
+        'UsersModel' => 'Users',
     ];
 
     /**
@@ -44,6 +44,7 @@ class NotifierComponent extends Component
      * initialize
      *
      * @param array $config Config.
+     *
      * @return void
      */
     public function initialize(array $config)
@@ -59,6 +60,7 @@ class NotifierComponent extends Component
      * Setter for the Controller property.
      *
      * @param \Cake\Controller\Controller $controller Controller.
+     *
      * @return void
      */
     public function setController($controller)
@@ -87,8 +89,10 @@ class NotifierComponent extends Component
      *  // get all read notifications
      *  $this->Notifier->getNotifications(1, false);
      * ```
+     *
      * @param int|null $userId Id of the user.
      * @param bool|null $state The state of notifications: `true` for unread, `false` for read, `null` for all.
+     *
      * @return array
      */
     public function getNotifications($userId = null, $state = null)
@@ -129,8 +133,10 @@ class NotifierComponent extends Component
      *  // count all read notifications
      *  $this->Notifier->countNotifications(1, false);
      * ```
+     *
      * @param int|null $userId Id of the user.
      * @param bool|null $state The state of notifications: `true` for unread, `false` for read, `null` for all.
+     *
      * @return int
      */
     public function countNotifications($userId = null, $state = null)
@@ -158,33 +164,55 @@ class NotifierComponent extends Component
      *
      * @param int $notificationId Id of the notification.
      * @param int|null $user Id of the user. Else the id of the session will be taken.
+     *
      * @return void
      */
     public function markAsRead($notificationId = null, $user = null)
     {
+        $this->processRead(true, $notificationId, $user);
+    }
+
+    private function processRead($read, $notificationId, $user)
+    {
         if (!$user) {
             $user = $this->Controller->Auth->user('id');
         }
-
         $model = TableRegistry::get('JeffersonSimaoGoncalves/Notifier.Notifications');
 
         if (!$notificationId) {
             $query = $model->find('all')->where([
                 'user_id' => $user,
-                'state' => 1
+                'state'   => $read ? 1 : 0,
             ]);
         } else {
             $query = $model->find('all')->where([
                 'user_id' => $user,
-                'id' => $notificationId
+                'id'      => $notificationId,
 
             ]);
         }
+        $state = $read ? 0 : 1;
 
         foreach ($query as $item) {
-            $item->set('state', 0);
+            $item->set('state', $state);
             $model->save($item);
         }
+    }
+
+    /**
+     * markAsUnread
+     *
+     * Used to mark a notification as unread.
+     * If no notificationId is given, all notifications of the chosen user will be marked as read.
+     *
+     * @param int $notificationId Id of the notification.
+     * @param int|null $user Id of the user. Else the id of the session will be taken.
+     *
+     * @return void
+     */
+    public function markAsUnread($notificationId = null, $user = null)
+    {
+        $this->processRead(false, $notificationId, $user);
     }
 
     /**
@@ -212,6 +240,7 @@ class NotifierComponent extends Component
      * ```
      *
      * @param array $data Data with options.
+     *
      * @return string
      */
     public function notify($data)
