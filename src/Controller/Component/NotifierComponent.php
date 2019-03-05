@@ -169,20 +169,16 @@ class NotifierComponent extends Component
      */
     public function markAsRead($notificationId = null, $user = null)
     {
-        $this->processRead(true, $notificationId, $user);
-    }
-
-    private function processRead($read, $notificationId, $user)
-    {
         if (!$user) {
             $user = $this->Controller->Auth->user('id');
         }
+
         $model = TableRegistry::get('JeffersonSimaoGoncalves/Notifier.Notifications');
 
         if (!$notificationId) {
             $query = $model->find('all')->where([
                 'user_id' => $user,
-                'state'   => $read ? 1 : 0,
+                'state'   => 1,
             ]);
         } else {
             $query = $model->find('all')->where([
@@ -191,10 +187,9 @@ class NotifierComponent extends Component
 
             ]);
         }
-        $state = $read ? 0 : 1;
 
         foreach ($query as $item) {
-            $item->set('state', $state);
+            $item->set('state', 0);
             $model->save($item);
         }
     }
@@ -212,7 +207,28 @@ class NotifierComponent extends Component
      */
     public function markAsUnread($notificationId = null, $user = null)
     {
-        $this->processRead(false, $notificationId, $user);
+        if (!$user) {
+            $user = $this->Controller->Auth->user('id');
+        }
+
+        $model = TableRegistry::get('JeffersonSimaoGoncalves/Notifier.Notifications');
+
+        if (!$notificationId) {
+            $query = $model->find('all')->where([
+                'user_id' => $user,
+                'state'   => 0,
+            ]);
+        } else {
+            $query = $model->find('all')->where([
+                'user_id' => $user,
+                'id'      => $notificationId,
+            ]);
+        }
+
+        foreach ($query as $item) {
+            $item->set('state', 1);
+            $model->save($item);
+        }
     }
 
     /**
