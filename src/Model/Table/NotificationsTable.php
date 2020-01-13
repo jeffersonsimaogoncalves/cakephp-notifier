@@ -38,7 +38,7 @@ class NotificationsTable extends Table
      *
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('notifications');
         $this->setDisplayField('title');
@@ -57,11 +57,11 @@ class NotificationsTable extends Table
     {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create')
-            ->allowEmpty('title')
-            ->allowEmpty('body')
+            ->allowEmptyString('id', 'create')
+            ->allowEmptyString('title')
+            ->allowEmptyString('body')
             ->add('state', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('state');
+            ->allowEmptyString('state');
 
         return $validator;
     }

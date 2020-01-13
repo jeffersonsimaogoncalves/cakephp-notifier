@@ -63,7 +63,7 @@ class Notification extends Entity
      * Setter for the vars-column
      *
      * @param array $vars Data.
-     * @return string
+     * @return array|string
      */
     protected function _setVars($vars)
     {

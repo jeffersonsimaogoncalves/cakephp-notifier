@@ -47,7 +47,7 @@ class NotifierComponent extends Component
      *
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -178,12 +178,12 @@ class NotifierComponent extends Component
         if (!$notificationId) {
             $query = $model->find('all')->where([
                 'user_id' => $user,
-                'state'   => 1,
+                'state' => 1,
             ]);
         } else {
             $query = $model->find('all')->where([
                 'user_id' => $user,
-                'id'      => $notificationId,
+                'id' => $notificationId,
 
             ]);
         }
@@ -216,12 +216,12 @@ class NotifierComponent extends Component
         if (!$notificationId) {
             $query = $model->find('all')->where([
                 'user_id' => $user,
-                'state'   => 0,
+                'state' => 0,
             ]);
         } else {
             $query = $model->find('all')->where([
                 'user_id' => $user,
-                'id'      => $notificationId,
+                'id' => $notificationId,
             ]);
         }
 

@@ -12,12 +12,11 @@
  * @since         1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace JeffersonSimaoGoncalves\Notifier\Utility;
 
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Text;
 
 /**
  * Notifier component
@@ -93,7 +92,7 @@ class NotificationManager
         }
 
         foreach ((array)$data['users'] as $user) {
-            $entity = $model->newEntity();
+            $entity = $model->newEmptyEntity();
 
             $entity->set('template', $data['template']);
             $entity->set('tracking_id', $data['tracking_id']);
@@ -105,6 +104,38 @@ class NotificationManager
         }
 
         return $data['tracking_id'];
+    }
+
+    /**
+     * getTrackingId
+     *
+     * Generates a tracking id for a notification.
+     *
+     * @return string
+     */
+    public function getTrackingId()
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $trackingId = '';
+        for ($i = 0; $i < 10; $i++) {
+            $trackingId .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $trackingId;
+    }
+
+    /**
+     * getRecipientList
+     *
+     * Returns a requested recipient list from Cake's Configure.
+     * Will return `null` if the list doesn't exist.
+     *
+     * @param string $name The name of the list.
+     * @return array|null
+     */
+    public function getRecipientList($name)
+    {
+        return Configure::read('Notifier.recipientLists.' . $name);
     }
 
     /**
@@ -127,20 +158,6 @@ class NotificationManager
     public function addRecipientList($name, $userIds)
     {
         Configure::write('Notifier.recipientLists.' . $name, $userIds);
-    }
-
-    /**
-     * getRecipientList
-     *
-     * Returns a requested recipient list from Cake's Configure.
-     * Will return `null` if the list doesn't exist.
-     *
-     * @param string $name The name of the list.
-     * @return array|null
-     */
-    public function getRecipientList($name)
-    {
-        return Configure::read('Notifier.recipientLists.' . $name);
     }
 
     /**
@@ -207,23 +224,5 @@ class NotificationManager
         }
 
         return false;
-    }
-
-    /**
-     * getTrackingId
-     *
-     * Generates a tracking id for a notification.
-     *
-     * @return string
-     */
-    public function getTrackingId()
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $trackingId = '';
-        for ($i = 0; $i < 10; $i++) {
-            $trackingId .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $trackingId;
     }
 }
