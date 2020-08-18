@@ -2,6 +2,7 @@
     "name": "jeffersonsimaogoncalves/cakephp-notifier",
     "description": "Notifier plugin for CakePHP",
     "type": "cakephp-plugin",
+    "license": "MIT",
     "authors": [
         {
             "name": "Bakkerij",
