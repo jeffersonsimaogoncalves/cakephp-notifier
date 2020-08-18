@@ -53,7 +53,7 @@ class NotificationsTable extends Table
      *
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
